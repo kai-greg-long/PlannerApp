@@ -17,16 +17,50 @@ class Program
         List<Item> items = new List<Item>();
         items.Add(new Item { Id = 1, Title = "Buy groceries", Category = "Personal", DueDate = DateTime.Now.AddDays(1), IsCompleted = false, Priority = 2 });
         items.Add(new Item { Id = 2, Title = "Finish project report", Category = "Work", DueDate = DateTime.Now.AddDays(3), IsCompleted = false, Priority = 1 });
-        items.Add(new Item { Id = 3, Title = "Call plumber", Category = "Home", DueDate = DateTime.Now.AddDays(2), IsCompleted = false, Priority = 3 });
+        items.Add(new Item { Id = 3, Title = "Call plumber", Category = "Home", DueDate = DateTime.Now.AddDays(2), IsCompleted = true, Priority = 3 });
         Console.WriteLine("To-Do List:");
         foreach (var item in items)
         {
-            Console.WriteLine($"{item.Id}. {item.Title} - {item.Category} - Due: {item.DueDate.ToShortDateString()} - Completed: {item.IsCompleted} - Priority: {item.Priority}");
+            Console.WriteLine($"{item.Id}. {item.Title} - {item.Category} - Due: {item.DueDate.ToShortDateString()} - Completed: {item.IsCompleted} - Priority: {item.Priority}/n");
         }
-       
-        var sortedbyDueDate = sortbyDueDate(items);
-        var incompleteItems = showIncomplete(items);
+
+        int selector = 0;
+
+        while (selector != 4)
+        {
+            Console.WriteLine("Select an option:");
+            Console.WriteLine("1. Sort by Due Date");
+            Console.WriteLine("2. Show Incomplete Items");
+            Console.WriteLine("3. Exit");
+            selector = int.Parse(Console.ReadLine());
+
+            var sortedbyDueDate = sortbyDueDate(items);
+            var incompleteItems = showIncomplete(items);
+
+            if (selector == 1)
+            {
+                Console.WriteLine("Sorted by Due Date: \n");
+                foreach (var item in sortedbyDueDate)
+                {
+                    Console.WriteLine($"{item.Id}. {item.Title} - {item.Category} - Due: {item.DueDate.ToShortDateString()} - Completed: {item.IsCompleted} - Priority: {item.Priority}\n");
+                }
+            }
+            else if (selector == 2)
+            {
+                Console.WriteLine("Incomplete Items: \n");
+                foreach (var item in incompleteItems)
+                {
+                    Console.WriteLine($"{item.Id}. {item.Title} - {item.Category} - Due: {item.DueDate.ToShortDateString()} - Completed: {item.IsCompleted} - Priority: {item.Priority}\n");
+                }
+            } else if (selector == 3) {
+                Console.WriteLine("Exiting \n");
+                    break;
+            } else {
+                Console.WriteLine("Invalid Response \n");
+                    }
+        }
     }
+    
     static List<Item> sortbyDueDate(List<Item> items)
     {
         return items.OrderBy(i => i.DueDate).ToList();
