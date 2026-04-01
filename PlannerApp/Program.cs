@@ -23,6 +23,20 @@ class Program
         {
             Console.WriteLine($"{item.Id}. {item.Title} - {item.Category} - Due: {item.DueDate.ToShortDateString()} - Completed: {item.IsCompleted} - Priority: {item.Priority}");
         }
+       
+        var sortedbyDueDate = sortbyDueDate(items);
+        var incompleteItems = showIncomplete(items);
+    }
+    static List<Item> sortbyDueDate(List<Item> items)
+    {
+        return items.OrderBy(i => i.DueDate).ToList();
+    }
+    static List<Item> showIncomplete(List<Item> items)
+    {
+        return items.Where(i => !i.IsCompleted).ToList();
+    }
+    static List<Item> filterByCategory(List<Item> items, string category)
+    {
+        return items.Where(i => i.Category.Equals(category, StringComparison.OrdinalIgnoreCase)).ToList();
     }
 }
-
